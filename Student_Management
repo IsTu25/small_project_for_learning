@@ -1,0 +1,218 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class student
+{
+private:
+    int roll_number, age;
+    string name;
+public:
+    student(int student_roll_number, string student_name, int student_age){
+        roll_number = student_roll_number;
+        name = student_name;
+        age = student_age;
+    }
+    void set_roll_number(int student_roll_number){
+        roll_number = student_roll_number;
+    }
+
+    int get_roll_number(){
+        return roll_number;
+    }
+
+    void set_name(string student_name){
+        name = student_name;
+    }
+    string get_name(){
+        return name;
+    }
+
+    void set_age(int student_age){
+        age = student_age;
+    }
+
+    int get_age(){
+        return age;
+    }
+
+    void displayStudent(){
+        cout << "Roll Number: " << roll_number << endl;
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+    }
+
+};
+
+void Display_all_student(vector<student>& students){
+    if(students.empty()){
+        cout << "No students in the list" << endl;
+        return;
+    }
+    for( int i = 0; i< students.size();i++){
+        students[i].displayStudent();
+        cout << endl;
+    }
+}
+
+void delete_student(vector<student>& students){
+    if(students.empty()){
+        cout << "No students in the list" << endl;
+        return;
+    }
+    cout << "Enter the roll number of the student you want to delete: ";
+    int roll_number;
+    cin >> roll_number;
+    for(int i = 0; i< students.size();i++){
+        if(students[i].get_roll_number() == roll_number){
+            students.erase(students.begin() + i);
+            cout << "Student deleted successfully" << endl;
+            return;
+        }
+    }
+}
+
+void Update_student_info(vector<student>& student){
+    if(student.empty()){
+        cout << "No students in the list" << endl;
+        return;
+    }
+    cout << "Enter the roll number of the student you want to update: ";
+    int roll_number;
+    cin >> roll_number;
+    bool found = false;
+    
+    
+    int new_roll_number, new_age;
+    string new_name_for_student;
+    
+    for(int i = 0; i < student.size(); i++){
+        if(student[i].get_roll_number() == roll_number){
+            cout << "\t\t----Student Found----"<<endl;
+            cout<<"\t\t 1.Update Rollno"<<endl;
+            cout<<"\t\t 2.Update name"<<endl;
+            cout<<"\t\t 3.Update age"<<endl;
+
+            int choice;
+            cin >> choice;
+            switch(choice){
+            case 1:
+                cout << "Enter new roll number: ";
+                cin >> new_roll_number;
+                student[i].set_roll_number(new_roll_number);
+                break;
+            case 2:
+                cout << "Enter new name: ";
+                cin >> new_name_for_student;
+                student[i].set_name(new_name_for_student);
+                break;
+            case 3:
+                cout << "Enter new age: ";
+                cin >> new_age;
+                student[i].set_age(new_age);
+                break;
+            default:
+                cout << "Invalid choice" << endl;
+                break;
+            }
+
+            found = true; 
+            break;  
+        }
+    }
+    if (!found) {
+        cout << "\t\tRecord not found" << endl;  
+    }
+}
+
+
+void Search_students(vector<student>& student){
+    int roll_number;
+    cout << "Enter the roll number of the student you want to search: ";
+    cin >> roll_number;
+    for(int i = 0; i< student.size(); i++){
+        if(student[i].get_roll_number() == roll_number){
+            cout<<"\t\t Student is found"<<endl;
+            student[i].displayStudent();
+            return;
+        }
+    }
+}
+
+void add_new_student(vector<student>& students){
+    int roll_number,age;
+    string name;
+    cout<<"Enter roll number: ";
+    cin>>roll_number;
+
+
+    for(int i=0; i<students.size(); i++){
+        if(students[i].get_roll_number()==roll_number){
+            cout<<"Roll number already exists. Please enter a different roll number."<<endl;
+            return;
+        }
+    }
+
+    cout<<"Enter name: ";
+    cin>>name;
+    cout<<"Enter age :";
+    cin>>age;
+    
+    students.push_back(student(roll_number,name,age));
+
+    cout<<"\t\tStudent add successfully.."<<endl;
+
+}
+
+int main(){
+    vector<student> students;
+    students.push_back(student(1,"Isfak",20));
+    
+   char choice;
+   
+   do{
+    int t;
+    cout<<"\t\t-------------------------------"<<endl;
+    cout<<"\t\t|          Student Management System        |"<<endl;
+    cout<<"\t\t-------------------------------"<<endl;
+    cout<<"\t\t 1. Add Student"<<endl;
+    cout<<"\t\t 2. display all students"<<endl;
+    cout<<"\t\t 3. search student"<<endl;
+    cout<<"\t\t 4. update student"<<endl;
+    cout<<"\t\t 5. delete student"<<endl;
+    cout<<"\t\t 6. exit"<<endl;
+    cout<<"\t\t enter your selection"<<endl;
+
+    cin>> t;
+    switch (t)
+    {
+    case 1:
+        add_new_student(students);
+        break;
+    case 2:
+        Display_all_student(students);
+        break;
+    case 3:
+        Search_students(students);
+        break;
+    case 4:
+        Update_student_info(students);
+        break;
+    case 5:
+        Update_student_info(students);
+        break;
+    case 6:
+        exit(6);
+        break;
+    default:
+        cout<<"\t\tInvalid choice"<<endl;
+        break;
+    }
+    cout<<"\t\tDo you want to continue [Yes / No]? :";
+    cin>>choice;
+   }
+   while(choice=='y'||choice=='Y');
+}
+
+
