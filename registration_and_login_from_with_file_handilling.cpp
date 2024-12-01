@@ -23,7 +23,7 @@ public:
 };
 
 void registration(Login& log) {
-    system("clear");  // Use "clear" instead of "cls" for non-Windows platforms
+    system("clear"); 
     string id, pw;
     cout << "Enter your id: " << endl;
     cin >> id;
